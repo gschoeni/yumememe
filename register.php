@@ -18,12 +18,13 @@
 			</p>
 			<p>
 				<label for="password" value="Password">Password: </label>
-				<input type="text" name="password" />
+				<input type="password" name="password" />
 			</p>
 			<p>
 				<label for="confirm_password" value="Confirm Password">Confirm Password: </label>
-				<input type="text" name="confirm_password" />
+				<input type="password" name="confirm_password" />
 			</p>
+			<p>Y U Already Have Account?? <a href="index.php">Login Here</a></p>
 			<p>
 				<input type="submit" value="Register" />
 			</p>
