@@ -4,6 +4,11 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-	<header>
-		<h1>Y U MEME ME???</h1>
-	</header>
+	<div id="outer-container">
+		<div id="inner-container">
+			<header>
+				<h1>Y U MEME ME???</h1>
+			</header>
+
+
+
