@@ -1,3 +1,4 @@
+<? require_once 'php_helpers/check_registration.php' ?>
 <? require_once 'layouts/header.php' ?>
 
 <div id="register">
@@ -26,7 +27,7 @@
 			</p>
 			<p>Y U Already Have Account?? <a href="index.php">Login Here</a></p>
 			<p>
-				<input type="submit" value="Register" />
+				<input type="submit" value="Register" name="submit_registration" />
 			</p>
 		</fieldset>
 		<p>
