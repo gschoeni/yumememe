@@ -13,6 +13,7 @@ if (isset($_POST['submit_login'])) {
 		$user_id = DbHelper::authenticate_user($_POST['email'], $_POST['password']);
 		if ($user_id > 0) { // we have found a user
 			$_SESSION['user'] = $_POST['email'];
+			$_SESSION['user_id'] = $user_id;
 			header('Location: profile_page.php');
 		} else {
 			$error = "Email and password combination not found, please try again.";

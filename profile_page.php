@@ -1,12 +1,6 @@
 <? require_once 'php_helpers/init.php' ?>
 <? check_logged_in(); ?>
-<html>
-<head>
-	<title>Y U MEME ME??</title>
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-</head>
-<body>
-
+<? require_once DOCUMENT_ROOT.'layouts/header.php'; ?>
 <div id="profile_page">
 
 	<div id="title_bar">
@@ -26,8 +20,8 @@
 
 	<div id="content">
 	</div>
+	<div class="clear"></div>
 
 </div>
 
-</body>
-</html>
+<? require_once DOCUMENT_ROOT.'layouts/footer.php'; ?>
