@@ -4,7 +4,7 @@ ini_set('display_errors',1);
 error_reporting(E_ALL);
 
 // Define globals
-define("DOCUMENT_ROOT", $_SERVER['DOCUMENT_ROOT']."/SN/");
+define("DOCUMENT_ROOT", $_SERVER['DOCUMENT_ROOT']."/team03/sn/");
 
 // require useful files
 require_once(DOCUMENT_ROOT.'php_helpers/functions.php');

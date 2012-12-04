@@ -6,7 +6,7 @@ class DbHelper {
 	private static $hostname = "localhost";
 	private static $username = "team03";
 	private static $password = "magenta";
-	private static $db_name = "yumememe";
+	private static $db_name = "team03";
 
 	private static function initialize() {
 		self::$db = new mysqli(self::$hostname, self::$username, self::$password, self::$db_name);
