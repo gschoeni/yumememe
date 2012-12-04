@@ -46,5 +46,4 @@ if ($_POST['check_registration']) {
 
 
 
-
 ?>
