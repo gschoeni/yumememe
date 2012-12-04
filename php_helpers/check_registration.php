@@ -1,6 +1,4 @@
 <?
-require_once 'php_helpers/functions.php';
-require_once 'db/connect_to_db.php';
 
 if (isset($_POST['check_registration'])) {
 
