@@ -30,24 +30,36 @@ class DbHelper {
 
 	public static function query($query, $params) {
 		self::initialize();
-		print_r(self::$db);
-		if($stmt = self::$db->prepare($query)) {
+		$stmt = self::$db->prepare($query);
 
-		} else {
-			echo "error";
+		$new = array();
+		for ($i = 0; $i < sizeof($params); $i++) { 
+			$new[$i] = $params[$i];
 		}
 
-		$new = array("ssss", "greg", "schoeninger", "email", "pass");
-		// for ($i = 0; $i < sizeof($params) ; $i++) { 
-		// 	$new[$i] = $params[$i];
-		// }
-		print_r($new);
-
-		call_user_func_array(array(&$stmt, 'bind_param'), $new);
+		call_user_func_array(array(&$stmt, 'bind_param'), &$new);
 		
 		$stmt->execute();
 		self::close_connection();
 	}
+
+	public static function register_user($first_name, $last_name, $email, $password) {
+		self::initialize();
+		if ($stmt = self::$db->prepare("INSERT INTO users (first_name, last_name, email, hashed_password) VALUES (?,?,?,?)")){
+			$stmt->bind_param('ssss', $fname, $lname, $em, $pass);
+			$fname = $first_name;
+			$lname = $last_name;
+			$em = $email;
+			$pass = sha1($password);
+			$stmt->execute();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+	}
+
+
 
 }
 

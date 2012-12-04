@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
 	first_name varchar(255) NOT NULL,
 	last_name varchar(255) NOT NULL,
 	email varchar(255) NOT NULL,
-	hased_password varchar(255) NOT NULL,
+	hashed_password varchar(255) NOT NULL,
 	PRIMARY KEY (id)
 );
 
