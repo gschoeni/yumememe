@@ -44,10 +44,10 @@ class DbHelper {
 		$user_id = 0;
 		if ($stmt = self::$db->prepare("SELECT id FROM users WHERE email = ?;")){
 			$stmt->bind_param('s', $email);
-	    $stmt->execute();
-	    $stmt->bind_result($user_id);
-	    $stmt->fetch();
-	   	$stmt->close();
+			$stmt->execute();
+			$stmt->bind_result($user_id);
+			$stmt->fetch();
+			$stmt->close();
 		} else {
 			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
 		}
@@ -93,6 +93,24 @@ class DbHelper {
 		}
 		self::close_connection();
 		return $user_id;
+	}
+
+	public static function find_all_users() {
+		self::initialize();
+		$users = array();
+		$query = "SELECT id, email, first_name, last_name FROM users";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->execute();
+			$stmt->bind_result($id, $email, $first_name, $last_name);
+			while ($stmt->fetch()) {
+				array_push($users, new User($id, $email, $first_name, $last_name));
+			}
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $users;
 	}
 
 	public static function find_user_by_id($_id) {

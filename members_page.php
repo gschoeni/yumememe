@@ -3,7 +3,11 @@
 <? require_once 'layouts/header.php' ?>
 
 <div id="members">
-  Members go here
+  <? foreach (DbHelper::find_all_users() as $user) { ?>
+    <div class="member">
+      <a href="/toggle_follower.php?user=<?= $_SESSION['user_id'] ?>&other=<?=$user->get_id()?>" alt="follow this user">
+    </div>
+  <? } ?>
 </div>
 
 <? require_once 'layouts/footer.php' ?>
