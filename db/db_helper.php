@@ -10,14 +10,6 @@ class DbHelper {
 	private static $db_name = "yumememe";
 
 	private static function initialize() {
-<<<<<<< HEAD
-
-		if (self::$db) {
-			return;
-		}
-
-=======
->>>>>>> e08b278077c9c8d902327159ff7a9239c5ae7f3f
 		self::$db = new mysqli(self::$hostname, self::$username, self::$password, self::$db_name);
 		if (mysqli_connect_errno()) {
 				printf("Connection failed %s\n", mysqli_connect_error());
