@@ -17,8 +17,9 @@
 		<div id="profile_picture">
 			<img class="image" src="sample_content/profile.png" />
 		</div>
-		<div id="view_own_images"><a href=""></a></div>
-		<div id="view_friends_images"><a href=""></a></div>
+		<div id="my_memes"><a href="profile_page.php">My Memes</a></div>
+		<div id="friends_memes"><a href="profile_page.php">Friends Memes</a></div>
+		<div id="all_memes"><a href="profile_page.php">All Memes</a></div>
 	</div>
 
 	<div id="content">

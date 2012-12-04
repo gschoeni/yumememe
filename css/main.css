@@ -18,12 +18,12 @@ label {
 	display: inline-block;
 }
 
-a {
+#title_bar a {
 	color: white;
 	text-decoration: none;
 }
 
-img.image {
+img {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -72,21 +72,24 @@ img.image {
 
 #side_bar {
 	margin-left: 50px;
-	width: 300px;
+	width: 200px;
 	height: 90%;
 	margin-right: 10px;
 }
 
-#content {
-	width: 71%;
-	height: 90%;
+#side_bar a {
+	text-decoration: none;
+	color: black;
+	text-align: left;
 }
 
-#profile_picture {
-	text-align: center;
-	border-style: solid;
-	border: 1px;
-	border-color: blue;
-	width: 100px;
-	height: 100px;
+#my_memes, #friends_memes, #all_memes {
+	text-align: left;
+	margin-top: 5px;
+	margin-left: 36px;
+}
+
+#content {
+	width: 78%;
+	height: 90%;
 }
