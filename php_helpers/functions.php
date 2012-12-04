@@ -1,4 +1,9 @@
 <?
+
+function current_user() {
+	return DbHelper::find_user_by_id($_SESSION['user_id']);
+}
+
 function validate_email($email) {
 	return preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^", $email);
 }

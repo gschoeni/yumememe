@@ -112,6 +112,25 @@ class DbHelper {
 		return $users;
 	}
 
+	public static function find_following_users($user_id) {
+		self::initialize();
+		$users = array();
+		$query = "SELECT users.id, users.email, users.first_name, users.last_name FROM users, followers WHERE users.id = followers.follower_id AND followers.user_id = ?;";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('i', $user_id);
+			$stmt->execute();
+			$stmt->bind_result($id, $email, $first_name, $last_name);
+			while ($stmt->fetch()) {
+				array_push($users, new User($id, $email, $first_name, $last_name));
+			}
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $users;
+	}
+
 	public static function find_user_by_id($_id) {
 		self::initialize();
 		$query = "SELECT id, email, first_name, last_name FROM users WHERE id = ?";
