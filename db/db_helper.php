@@ -56,7 +56,7 @@ class DbHelper {
 	}
 
 	public static function register_user($first_name, $last_name, $email, $password) {
-		if (DbHelper::find_user_by_email($email) > 0) { // this email has already been registered
+		if (self::find_user_by_email($email) > 0) { // this email has already been registered
 			return false;
 		} else {
 			self::initialize();
@@ -110,6 +110,8 @@ class DbHelper {
 		self::close_connection();
 		return new User($id, $email, $first_name, $last_name);
 	}
+
+
 
 }
 

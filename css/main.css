@@ -8,6 +8,10 @@ header {
 	margin:0px auto;
 }
 
+footer {
+	padding: 20px;
+}
+
 fieldset {
 	width:60%;
 	margin:20px auto;
@@ -16,6 +20,10 @@ fieldset {
 label {
 	width:100px;
 	display: inline-block;
+}
+
+.clear {
+	clear:both;
 }
 
 #title_bar a {
@@ -41,8 +49,6 @@ img {
 }
 
 #title_bar {
-	margin-left: 50px;
-	margin-right: 50px;
 	margin-top: 5px;
 	margin-bottom: 20px;
 	height: 30px;
@@ -71,7 +77,6 @@ img {
 }
 
 #side_bar {
-	margin-left: 50px;
 	width: 200px;
 	height: 90%;
 	margin-right: 10px;
@@ -90,6 +95,7 @@ img {
 }
 
 #content {
-	width: 78%;
+	width: 740px;
 	height: 90%;
+	float:right;
 }
