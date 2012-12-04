@@ -1,9 +1,6 @@
 <?
-
+$error_message = "";
 if (isset($_POST['check_registration'])) {
-
-	$error_message = "";
-	$query = "INSERT INTO users (first_name, last_name, email, hashed_password) VALUES (?,?,?,?)";
 
 	if (!$_POST['first_name']) {
 		$error_message .= "Please enter your first name. <br/>";
@@ -26,10 +23,12 @@ if (isset($_POST['check_registration'])) {
 	}
 
 	if ($error_message == "") {
-		DbHelper::register_user($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password']);
-		header("Location: index.php?message=Registration successful, please log in to continue.");
-	} else {
-		echo $error_message;
+		if (DbHelper::register_user($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'])) {
+			header("Location: index.php?message=Registration successful, please log in to continue.");
+		} else {
+			$error_message = "Email already exists, try to logging in, or create a new account.";
+		}
+		
 	}
 
 }

@@ -6,17 +6,24 @@
 	<form action="register.php" method="POST">
 		<fieldset>
 			<legend>Y U REGISTER???</legend>
+			<p class="error_message">
+				<? 
+				if ($error_message != '') { // set in check_login.php
+					echo $error_message;
+				}
+				?>
+			</p>
 			<p>
 				<label for="first_name" value="First name">First Name: </label>
-				<input type="text" name="first_name" />
+				<input type="text" name="first_name" value="<?= get_string_if_set($_POST, 'first_name') ?>" />
 			</p>
 			<p>
 				<label for="last_name" value="Last name">Last Name: </label>
-				<input type="text" name="last_name" />
+				<input type="text" name="last_name" value="<?= get_string_if_set($_POST, 'last_name') ?>" />
 		  </p>
 			<p>
 				<label for="email" value="E-Mail">E-Mail: </label>
-				<input type="text" name="email" />
+				<input type="text" name="email" value="<?= get_string_if_set($_POST, 'email') ?>" />
 			</p>
 			<p>
 				<label for="password" value="Password">Password: </label>

@@ -10,11 +10,14 @@ class DbHelper {
 	private static $db_name = "yumememe";
 
 	private static function initialize() {
+<<<<<<< HEAD
 
 		if (self::$db) {
 			return;
 		}
 
+=======
+>>>>>>> e08b278077c9c8d902327159ff7a9239c5ae7f3f
 		self::$db = new mysqli(self::$hostname, self::$username, self::$password, self::$db_name);
 		if (mysqli_connect_errno()) {
 				printf("Connection failed %s\n", mysqli_connect_error());
@@ -44,20 +47,42 @@ class DbHelper {
 		self::close_connection();
 	}
 
-	public static function register_user($first_name, $last_name, $email, $password) {
+	public static function find_user_by_email($email) {
 		self::initialize();
-		if ($stmt = self::$db->prepare("INSERT INTO users (first_name, last_name, email, hashed_password) VALUES (?,?,?,?)")){
-			$stmt->bind_param('ssss', $fname, $lname, $em, $pass);
-			$fname = $first_name;
-			$lname = $last_name;
-			$em = $email;
-			$pass = sha1($password);
-			$stmt->execute();
-			$stmt->close();
+		$user_id = 0;
+		if ($stmt = self::$db->prepare("SELECT id FROM users WHERE email = ?;")){
+			$stmt->bind_param('s', $email);
+	    $stmt->execute();
+	    $stmt->bind_result($user_id);
+	    $stmt->fetch();
+	   	$stmt->close();
 		} else {
 			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
 		}
 		self::close_connection();
+		return $user_id;
+	}
+
+	public static function register_user($first_name, $last_name, $email, $password) {
+		if (DbHelper::find_user_by_email($email) > 0) { // this email has already been registered
+			return false;
+		} else {
+			self::initialize();
+			if ($stmt = self::$db->prepare("INSERT INTO users (first_name, last_name, email, hashed_password) VALUES (?,?,?,?)")){
+				$stmt->bind_param('ssss', $fname, $lname, $em, $pass);
+				$fname = $first_name;
+				$lname = $last_name;
+				$em = $email;
+				$pass = sha1($password);
+				$stmt->execute();
+				$stmt->close();
+			} else {
+				die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+			}
+			self::close_connection();
+			return true;
+		}
+
 	}
 
 	public static function authenticate_user($email, $password) {
