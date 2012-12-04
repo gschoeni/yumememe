@@ -10,4 +10,9 @@ define("DOCUMENT_ROOT", $_SERVER['DOCUMENT_ROOT']."/SN/");
 require_once(DOCUMENT_ROOT.'php_helpers/functions.php');
 require_once(DOCUMENT_ROOT.'db/db_helper.php');
 
+
+// init the users session
+session_start();
+
+
 ?>

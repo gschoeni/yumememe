@@ -27,6 +27,7 @@ if (isset($_POST['check_registration'])) {
 
 	if ($error_message == "") {
 		DbHelper::register_user($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password']);
+		header("Location: index.php?message=Registration successful, please log in to continue.");
 	} else {
 		echo $error_message;
 	}

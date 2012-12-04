@@ -1,3 +1,5 @@
+<? require_once 'php_helpers/init.php' ?>
+<? check_logged_in(); ?>
 <html>
 <head>
 	<title>Y U MEME ME??</title>
