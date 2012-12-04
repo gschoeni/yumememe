@@ -111,6 +111,49 @@ class DbHelper {
 		return new User($id, $email, $first_name, $last_name);
 	}
 
+	public static function toggle_following($user, $other) {
+		$id = self::is_following($user, $other);
+
+		if ($id == 0) {
+			$query = "INSERT INTO followers (user_id, follower_id) VALUES (?, ?)";
+		} else {
+			$query = "DELETE FROM followers WHERE id = ?";
+		}
+
+		self::initialize();
+
+		if ($stmt = self::$db->prepare($query)){
+			if ($id > 0) {
+				$stmt->bind_param("ii", $user, $other);
+			} else {
+				$stmt->bind_param("i", $id);
+			}
+			$stmt->execute();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $id == 0;
+	}
+
+	public static function is_following($user, $other) {
+		self::initialize();
+		$id = 0;
+		$query = "SELECT id FROM followers WHERE user_id = ? and follower_id = ?";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('ii', $user, $other);
+			$stmt->execute();
+			$stmt->bind_result($id);
+			$stmt->fetch();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $id;
+	}
+
 }
 
 
