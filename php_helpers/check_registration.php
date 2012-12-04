@@ -1,9 +1,11 @@
 <?
-require_once 'functions.php';
+require_once 'php_helpers/functions.php';
+require_once 'db/connect_to_db.php';
 
-if ($_POST['submit_registration']) {
+if ($_POST['check_registration']) {
 
 	$error_message = "";
+	$query = "INSERT INTO users (first_name, last_name, email, hashed_password) VALUES (?,?,?,?)";
 
 	if (!$_POST['first_name']) {
 		$error_message .= "Please enter your first name. <br/>";
@@ -17,7 +19,7 @@ if ($_POST['submit_registration']) {
 		$error_message .= "Please provide a valid email. <br/>";
 	}
 
-	if (!$_POST['password'] || !$_POST['confirm_password'] || ) {
+	if (!$_POST['password'] || !$_POST['confirm_password']) {
 		$error_message .= "Please confirm your password. <br/>";
 	}
 
@@ -26,8 +28,15 @@ if ($_POST['submit_registration']) {
 	}
 
 	if ($error_message == "") {
-		echo "GOOD JOB!";
-		//$db = new DbHelper();
+
+		$params = array( 
+			"ssss", 
+			$_POST['first_name'], 
+			$_POST['last_name'] , 
+			$_POST['email'] , 
+			sha1($_POST['password']));
+
+		DbHelper::query($query, $params);
 		//header("Location: profile.php");
 	} else {
 		echo $error_message;

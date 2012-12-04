@@ -2,7 +2,7 @@
 <? require_once 'layouts/header.php' ?>
 
 <div id="register">
-	<form action="index.php" method="POST">
+	<form action="register.php" method="POST">
 		<fieldset>
 			<legend>Y U REGISTER???</legend>
 			<p>
@@ -27,7 +27,7 @@
 			</p>
 			<p>Y U Already Have Account?? <a href="index.php">Login Here</a></p>
 			<p>
-				<input type="submit" value="Register" name="submit_registration" />
+				<input type="submit" value="Register" name="check_registration" />
 			</p>
 		</fieldset>
 		<p>

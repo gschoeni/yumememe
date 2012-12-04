@@ -3,37 +3,45 @@
 class DbHelper {
 
 	private static $db;
-	private $hostname = "localhost";
-	private $username = "root";
-	private $password = "root";
-	private $db_name = "yumememe";
+	private static $hostname = "localhost";
+	private static $username = "root";
+	private static $password = "";
+	private static $db_name = "yumememe";
 
-	public __construct() {
-		$db = self::getInstance();
-	}
+	private static function initialize() {
+		
+		if (self::$db) {
+			return;
+		}
 
-	public static function getInstance() {
-		if (!self::$db) {
-			self::$db = new mysqli($hostname, $username, $password, $db_name);
-			if (mysqli_connect_errno()) {
+		self::$db = new mysqli(self::$hostname, self::$username, self::$password, self::$db_name);
+		if (mysqli_connect_errno()) {
 				printf("Connection failed %s\n", mysqli_connect_error());
 				exit();
-			}
 		}
-		return self::$db;
 	}
 
-	private close_connection() {
-		if (!$db->close()) {
+	private static function close_connection() {
+		if (!self::$db->close()) {
 			printf("Could not close connection to database\n");
 			exit();
 		}
 	}
 
-	public function query($query, $params) {
-		
-	}
+	public static function query($query, $params) {
+		self::initialize();
+		$stmt = self::$db->prepare($query);
 
+		$new = array();
+		for ($i = 0; $i < sizeof($params) ; $i++) { 
+			array_push($new, &$params[$i]);
+		}
+
+		call_user_func_array(array(&$stmt, 'bind_param'), $new);
+		
+		$stmt->execute();
+		self::close_connection();
+	}
 
 }
 
