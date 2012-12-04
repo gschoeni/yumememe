@@ -4,8 +4,8 @@ class DbHelper {
 
 	private static $db;
 	private static $hostname = "localhost";
-	private static $username = "root";
-	private static $password = "";
+	private static $username = "team03";
+	private static $password = "magenta";
 	private static $db_name = "yumememe";
 
 	private static function initialize() {
@@ -30,12 +30,18 @@ class DbHelper {
 
 	public static function query($query, $params) {
 		self::initialize();
-		$stmt = self::$db->prepare($query);
+		print_r(self::$db);
+		if($stmt = self::$db->prepare($query)) {
 
-		$new = array();
-		for ($i = 0; $i < sizeof($params) ; $i++) { 
-			array_push($new, &$params[$i]);
+		} else {
+			echo "error";
 		}
+
+		$new = array("ssss", "greg", "schoeninger", "email", "pass");
+		// for ($i = 0; $i < sizeof($params) ; $i++) { 
+		// 	$new[$i] = $params[$i];
+		// }
+		print_r($new);
 
 		call_user_func_array(array(&$stmt, 'bind_param'), $new);
 		
