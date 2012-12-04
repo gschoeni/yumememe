@@ -1,5 +1,4 @@
 <?
-require_once 'models/user.php';
 
 class DbHelper {
 
@@ -141,7 +140,7 @@ class DbHelper {
 		self::initialize();
 
 		if ($stmt = self::$db->prepare($query)){
-			if ($id > 0) {
+			if ($id == 0) {
 				$stmt->bind_param("ii", $user, $other);
 			} else {
 				$stmt->bind_param("i", $id);
