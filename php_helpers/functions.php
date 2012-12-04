@@ -14,4 +14,5 @@ function check_already_logged_in() {
  		header("Location: profile_page.php");
 	}
 }
+
 ?>
