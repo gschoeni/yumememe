@@ -15,4 +15,12 @@ function check_already_logged_in() {
 	}
 }
 
+function get_string_if_set($var, $string) {
+	if (isset($var[$string])){
+		return $var[$string];
+	} else {
+		return "";
+	}
+}
+
 ?>
