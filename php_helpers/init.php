@@ -10,6 +10,8 @@ define("DOCUMENT_ROOT", $_SERVER['DOCUMENT_ROOT']."/team03/sn/");
 require_once(DOCUMENT_ROOT.'php_helpers/functions.php');
 require_once(DOCUMENT_ROOT.'db/db_helper.php');
 require_once(DOCUMENT_ROOT.'models/user.php');
+require_once(DOCUMENT_ROOT.'models/meme.php');
+
 // init the users session
 session_start();
 

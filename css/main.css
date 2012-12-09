@@ -96,6 +96,11 @@ img {
 
 #content {
 	width: 740px;
-	height: 90%;
+	min-height: 90%;
 	float:right;
+}
+
+.meme {
+	border: 1px solid #e2e2e2;
+	padding:10px;
 }

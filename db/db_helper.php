@@ -73,7 +73,6 @@ class DbHelper {
 			self::close_connection();
 			return true;
 		}
-
 	}
 
 	public static function authenticate_user($email, $password) {
@@ -110,6 +109,25 @@ class DbHelper {
 		}
 		self::close_connection();
 		return $users;
+	}
+
+	public static function find_users_memes($user_id) {
+		self::initialize();
+		$memes = array();
+		$query = "SELECT id, title, user_id, timestamp FROM memes WHERE user_id = ? ORDER BY timestamp DESC;";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('i', $user_id);
+			$stmt->execute();
+			$stmt->bind_result($id, $title, $user_id, $timestamp);
+			while ($stmt->fetch()) {
+				array_push($memes, new Meme($id, $title, $user_id, $timestamp));
+			}
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $memes;
 	}
 
 	public static function find_users_by_name_or_email($search_string) {
@@ -226,6 +244,22 @@ class DbHelper {
 		}
 		self::close_connection();
 		return $id;
+	}
+
+	public static function insert_meme($title, $user_id) {
+		
+		self::initialize();
+		$id = 0;
+		if ($stmt = self::$db->prepare("INSERT INTO memes (title, user_id) VALUES (?,?)")){
+			$stmt->bind_param('si', $title, $user_id);
+			$stmt->execute();
+			$id = self::$db->insert_id;
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $id;	
 	}
 
 }
