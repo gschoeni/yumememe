@@ -4,5 +4,6 @@
 		<img class="image" src="sample_content/profile.png" />
 	</div>
 	<div id="my_memes"><a href="members_page.php">All Members</a></div>
-	<div id="my_memes"><a href="following_page.php">Who I am Following</a></div>
+	<div id="my_memes"><a href="following_page.php">Following</a></div>
+	<div id="my_memes"><a href="followers_page.php">Followers</a></div>
 </div>

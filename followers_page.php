@@ -5,13 +5,13 @@
 <? require_once DOCUMENT_ROOT.'layouts/sidebar.php'; ?>
 
 <div id="content">
-	<h2>Who I am Following</h2>
+	<h2>Who's Following Me</h2>
 	<div id="members">
 	  <?  if (isset($_GET['message'])) {
 	        echo $_GET['message'];
 	      }
 	    $count = 0;
-	    foreach (DbHelper::find_following_users($_SESSION['user_id']) as $user) { 
+	    foreach (DbHelper::find_followers($_SESSION['user_id']) as $user) { 
 	    	$count++;
 	  ?>
 	    <div class="member">
@@ -19,7 +19,7 @@
 	    </div>
 	  <? } 
 	  	if (!$count) {
-	  		echo "You aren't following anyone yet, don't be shy!";
+	  		echo "You don't have any followers yet.. Posting funny memes will fix that!";
 	  	}
 	  ?>
 	</div>

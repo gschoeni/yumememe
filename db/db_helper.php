@@ -115,6 +115,25 @@ class DbHelper {
 	public static function find_following_users($user_id) {
 		self::initialize();
 		$users = array();
+		$query = "SELECT users.id, users.email, users.first_name, users.last_name FROM users, followers WHERE users.id = followers.user_id AND followers.follower_id = ?;";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('i', $user_id);
+			$stmt->execute();
+			$stmt->bind_result($id, $email, $first_name, $last_name);
+			while ($stmt->fetch()) {
+				array_push($users, new User($id, $email, $first_name, $last_name));
+			}
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $users;
+	}
+
+	public static function find_followers($user_id) {
+		self::initialize();
+		$users = array();
 		$query = "SELECT users.id, users.email, users.first_name, users.last_name FROM users, followers WHERE users.id = followers.follower_id AND followers.user_id = ?;";
 		if ($stmt = self::$db->prepare($query)){
 			$stmt->bind_param('i', $user_id);
@@ -160,7 +179,7 @@ class DbHelper {
 
 		if ($stmt = self::$db->prepare($query)){
 			if ($id == 0) {
-				$stmt->bind_param("ii", $user, $other);
+				$stmt->bind_param("ii", $other, $user);
 			} else {
 				$stmt->bind_param("i", $id);
 			}
@@ -178,7 +197,7 @@ class DbHelper {
 		$id = 0;
 		$query = "SELECT id FROM followers WHERE user_id = ? and follower_id = ?";
 		if ($stmt = self::$db->prepare($query)){
-			$stmt->bind_param('ii', $user, $other);
+			$stmt->bind_param('ii', $other, $user);
 			$stmt->execute();
 			$stmt->bind_result($id);
 			$stmt->fetch();

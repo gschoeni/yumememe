@@ -1,9 +1,9 @@
 <?
   require_once 'init.php';
-
-  if (isset($_GET['user']) && isset($_GET['other'])) {
+  check_logged_in();
+  if (isset($_GET['other'])) {
     $message = "";
-    $following_id = DbHelper::toggle_following($_GET['user'], $_GET['other']);
+    $following_id = DbHelper::toggle_following($_SESSION['user_id'], $_GET['other']);
     if ($following_id > 0) {
       $message = "You're now following ".$_GET['name'];
     } else {
