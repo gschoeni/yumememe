@@ -112,6 +112,25 @@ class DbHelper {
 		return $users;
 	}
 
+	public static function find_users_by_name_or_email($search_string) {
+		self::initialize();
+		$users = array();
+		$query = "SELECT id, email, first_name, last_name FROM users WHERE first_name = ? or last_name = ? or email = ?";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('sss', explode(" ", $search_string)[0], explode(" ", $search_string)[1], $search_string);
+			$stmt->execute();
+			$stmt->bind_result($id, $email, $first_name, $last_name);
+			while ($stmt->fetch()) {
+				array_push($users, new User($id, $email, $first_name, $last_name));
+			}
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $users;
+	}
+
 	public static function find_following_users($user_id) {
 		self::initialize();
 		$users = array();

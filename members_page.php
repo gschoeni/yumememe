@@ -7,11 +7,23 @@
 <div id="content">
   <div id="members">
     <h2>All Members</h2>
+    <form action="members_page.php">
+      <input type="text" name="q" />
+      <input type="submit" value="search" />
+    </form>
     <?  if (isset($_GET['message'])) {
           echo $_GET['message'] ."<br/><br/>" ;
         }
-      foreach (DbHelper::find_all_users() as $user) { ?>
-      <? if ($user->get_id() != $_SESSION['user_id']) { ?>
+      if (isset($_GET['q'])) {
+        $result_set = DbHelper::find_users_by_name_or_email($_GET['q']);
+      } else {
+        $result_set = DbHelper::find_all_users();
+      }
+      $count = 0;
+      foreach ($result_set as $user) { ?>
+      <? if ($user->get_id() != $_SESSION['user_id']) { 
+          $count++;
+      ?>
         <div class="member">
           <?= $user->get_name() ?>
           <a style="color:green" href="php_helpers/toggle_follower.php?name=<?= $user->get_name() ?>&user=<?= $_SESSION['user_id'] ?>&other=<?=$user->get_id()?>" alt="follow this user">
@@ -24,6 +36,7 @@
         </div>
       <? } ?>
     <? } ?>
+    <? if ($count == 0) { echo "No results found for '".$_GET['q']."'"; }?>
   </div>
 </div>
 <div class="clear"></div>
