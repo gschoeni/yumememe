@@ -17,9 +17,9 @@
 			<form action="php_helpers/upload_meme.php" method="post" name="upload_image" enctype="multipart/form-data">
 				<fieldset>
 					<label for="upload_image">Pick an image to upload:</label>
-						<input type="file" name="upload_image" id="upload_image"/><br/>
+						<input type="file" name="upload_image" id="upload_image" required/><br/>
 					<label for="upload_image">Title:</label>
-						<input type="text" name="img_title" id="img_title" />
+						<input type="text" name="img_title" id="img_title"required />
 					<input type="submit" value="Upload" />
 				</fieldset>
 			</form>
