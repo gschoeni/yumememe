@@ -11,7 +11,7 @@
 	        echo $_GET['message'];
 	      }
 	    $count = 0;
-	    foreach (DbHelper::find_following_users($_SESSION['user_id']) as $user) { 
+	    foreach (DbHelper::find_following_users($_SESSION['user_id']) as $user) {
 	    	$count++;
 	  ?>
 	    <div class="member">
@@ -19,17 +19,19 @@
         <a style="color:green" href="php_helpers/toggle_follower.php?name=<?= $user->get_name() ?>&user=<?= $_SESSION['user_id'] ?>&other=<?=$user->get_id()?>" alt="follow this user">
           <? if (DbHelper::is_following($_SESSION['user_id'], $user->get_id()) > 0) { // is_following returns the id of the row in the following table or 0
             echo "Unfollow";
-          } else { 
+          } else {
             echo "Follow";
           }?>
         </a>
 	    </div>
-	  <? } 
+	  <? }
 	  	if (!$count) {
 	  		echo "You aren't following anyone yet, don't be shy!";
 	  	}
 	  ?>
 	</div>
 </div>
+<div class="clear"></div>
+
 
 <? require_once 'layouts/footer.php' ?>

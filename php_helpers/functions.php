@@ -51,7 +51,7 @@ function upload_photo_with_dir_and_id($dir, $image_id) {
 	}
 
 	/********************************************************************************
-	This first example creates a small image that is a maximum size of 50 X 50 pixels 
+	This first example creates a small image that is a maximum size of 50 X 50 pixels
 	********************************************************************************/
 
 	// The maximum dimensions for your new image
@@ -75,10 +75,10 @@ function upload_photo_with_dir_and_id($dir, $image_id) {
 
 	// Store the image in the "uploads" directory as image_thumb.jpg. The 90 at the end specifies the quality of the image
 	imagejpeg($new, $dir.$image_id."_thumb.jpg", 90);
-	
 
-	/******************************************************************************* 
-	This example creates a larger image that is a maximum size of 400 X 400 pixels 
+
+	/*******************************************************************************
+	This example creates a larger image that is a maximum size of 400 X 400 pixels
 	********************************************************************************/
 
 	// The maximum dimensions for your new image
@@ -99,10 +99,10 @@ function upload_photo_with_dir_and_id($dir, $image_id) {
 	// Actually create the new image
 	$new = imagecreatetruecolor($new_width, $new_height);
 	imagecopyresampled($new, $image, 0, 0, 0, 0, $new_width, $new_height, $old_width, $old_height);
-	
+
 	// Store the image in the "uploads" directory as image.jpg.
 	imagejpeg($new, $dir.$image_id.".jpg", 90);
-	
+
 	// Clean up
 	imagedestroy($image);
 	imagedestroy($new);

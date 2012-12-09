@@ -151,7 +151,8 @@ class DbHelper {
 		$users = array();
 		$query = "SELECT id, email, first_name, last_name FROM users WHERE first_name = ? or last_name = ? or email = ?";
 		if ($stmt = self::$db->prepare($query)){
-			$stmt->bind_param('sss', explode(" ", $search_string)[0], explode(" ", $search_string)[1], $search_string);
+			$search = explode(" ", $search_string);
+			$stmt->bind_param('sss', $search[0], $search[1], $search_string);
 			$stmt->execute();
 			$stmt->bind_result($id, $email, $first_name, $last_name);
 			while ($stmt->fetch()) {
@@ -288,7 +289,7 @@ class DbHelper {
 			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
 		}
 		self::close_connection();
-		return $id;	
+		return $id;
 	}
 
 	public static function like_meme($user_id, $meme_id) {

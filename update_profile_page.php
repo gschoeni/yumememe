@@ -15,7 +15,6 @@
 				<label for="first_name">First Name</label><input type="text" name="first_name" value="<?=$user->get_first_name()?>" /><br/>
 				<label for="last_name">Last Name</label><input type="text" name="last_name" value="<?=$user->get_last_name()?>" /><br/>
 				<label for="email">Email</label><input type="text" name="email" value="<?=$user->get_email()?>" /><br/>
-				
 				<input type="submit" value="Update" />
 			</fieldset>
 		</form>
