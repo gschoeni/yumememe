@@ -13,7 +13,7 @@
 	<div id="content">
 		<? if ($user_id == $_SESSION['user_id']) {
 		?>
-		<form action="upload_meme.php" method="post" name="upload_image" enctype="multipart/form-data">
+		<form action="php_helpers/upload_meme.php" method="post" name="upload_image" enctype="multipart/form-data">
 			<fieldset>
 				<label for="upload_image">Pick an image to upload:</label>
 					<input type="file" name="upload_image" id="upload_image"/><br/>

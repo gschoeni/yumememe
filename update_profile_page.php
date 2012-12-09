@@ -5,23 +5,20 @@
 
 	<? require_once DOCUMENT_ROOT.'layouts/title_bar.php'; ?>
 	<? require_once DOCUMENT_ROOT.'layouts/sidebar.php'; ?>
-	<? if (isset($_GET['id'])) $user_id = $_GET['id']; // viewing someone elses profile
-			else $user_id = $_SESSION['user_id']; // viewing your own profile
-	?>
+	<? $user = DbHelper::find_user_by_id($_SESSION['user_id']); ?>
 
 
 	<div id="content">
-		<? if ($user_id == $_SESSION['user_id']) {
-		?>
-		<form action="update_profile.php" method="post" name="upload_image" enctype="multipart/form-data">
+		<form action="php_helpers/update_profile.php" method="post" name="upload_image" enctype="multipart/form-data">
 			<fieldset>
-				<label for="upload_image">Profile Picture:</label>
-					<input type="file" name="upload_image" id="upload_image"/>
-				<input type="submit" value="Upload" />
+				<label for="upload_image">Profile Picture:</label><input type="file" name="upload_image" id="upload_image"/><br/>
+				<label for="first_name">First Name</label><input type="text" name="first_name" value="<?=$user->get_first_name()?>" /><br/>
+				<label for="last_name">Last Name</label><input type="text" name="last_name" value="<?=$user->get_last_name()?>" /><br/>
+				<label for="email">Email</label><input type="text" name="email" value="<?=$user->get_email()?>" /><br/>
+				
+				<input type="submit" value="Update" />
 			</fieldset>
 		</form>
-		<?
-		}?>
 	</div>
 	<div class="clear"></div>
 

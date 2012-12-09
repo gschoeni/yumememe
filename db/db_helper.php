@@ -219,6 +219,20 @@ class DbHelper {
 		return new User($id, $email, $first_name, $last_name);
 	}
 
+	public static function update_user($id, $first_name, $last_name, $email) {
+		self::initialize();
+		$query = "UPDATE users SET email = ?, first_name = ?, last_name = ? WHERE id = ?";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('sssi', $email, $first_name, $last_name, $id);
+			$stmt->execute();
+			$stmt->fetch();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+	}
+
 	public static function toggle_following($user, $other) {
 		$id = self::is_following($user, $other);
 
