@@ -353,6 +353,25 @@ class DbHelper {
 		return $comments;
 	}
 
+	public static function find_my_friends_memes($user_id) {
+		self::initialize();
+		$memes = array();
+		$query = "SELECT id, title, user_id, timestamp FROM memes WHERE user_id in (SELECT user_id FROM followers WHERE follower_id = ?) ORDER BY timestamp DESC;";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('i', $user_id);
+			$stmt->execute();
+			$stmt->bind_result($id, $title, $user_id, $timestamp);
+			while ($stmt->fetch()) {
+				array_push($memes, new Meme($id, $title, $user_id, $timestamp));
+			}
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $memes;
+	}
+
 }
 
 
