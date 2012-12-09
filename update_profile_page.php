@@ -11,10 +11,14 @@
 	<div id="content">
 		<form action="php_helpers/update_profile.php" method="post" name="upload_image" enctype="multipart/form-data">
 			<fieldset>
-				<label for="upload_image">Profile Picture:</label><input type="file" name="upload_image" id="upload_image"/><br/>
-				<label for="first_name">First Name</label><input type="text" name="first_name" value="<?=$user->get_first_name()?>" /><br/>
-				<label for="last_name">Last Name</label><input type="text" name="last_name" value="<?=$user->get_last_name()?>" /><br/>
-				<label for="email">Email</label><input type="text" name="email" value="<?=$user->get_email()?>" /><br/>
+				<label for="upload_image">Profile Picture:</label>
+				<input type="file" name="upload_image" id="upload_image" /><br/>
+				<label for="first_name">First Name</label>
+				<input type="text" name="first_name" value="<?=$user->get_first_name()?>" required /><br/>
+				<label for="last_name">Last Name</label>
+				<input type="text" name="last_name" value="<?=$user->get_last_name()?>" required /><br/>
+				<label for="email">Email</label>
+				<input type="email" name="email" value="<?=$user->get_email()?>" required /><br/>
 				<input type="submit" value="Update" />
 			</fieldset>
 		</form>
