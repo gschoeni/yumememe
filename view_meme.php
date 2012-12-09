@@ -6,7 +6,7 @@
 <? $meme = DbHelper::find_meme($_GET['id']); ?>
 <div id="content">
 	<h2><?= $meme->get_title(); ?></h2>
-	<img src="uploads/memes/<?= $meme->get_id(); ?>.jpg"><br/>
+	<img class="img-polaroid" src="uploads/memes/<?= $meme->get_id(); ?>.jpg"><br/>
 	<a href="php_helpers/like_meme.php?id=<?= $meme->get_id(); ?>">Like (<?= $meme->get_likes(); ?>)</a>
 	<form action="php_helpers/submit_comment.php" method="POST">
 		<label>Comment:</label><textarea name="comment"></textarea>
@@ -16,7 +16,7 @@
 	<div class="comments">
 		<?
 		$count = 0;
-	    foreach (DbHelper::get_meme_comments($meme->get_id()) as $comment) { 
+	    foreach (DbHelper::get_meme_comments($meme->get_id()) as $comment) {
 	    	$count++;
 	    	?>
 	    	<div class="comment">
@@ -29,5 +29,5 @@
 		?>
 	</div>
 </div>
-
+<div class="clear"></div>
 <? require_once 'layouts/footer.php' ?>

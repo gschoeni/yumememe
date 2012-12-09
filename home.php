@@ -9,17 +9,19 @@
 	<div id="content">
 		<h2>Meme Feed</h2>
 		<div id="memes">
-			<? 
+			<?
 			$count = 0;
-			foreach (DbHelper::find_my_friends_memes($user_id) as $meme) { 
+			foreach (DbHelper::find_my_friends_memes($user_id) as $meme) {
 				$count++;
 			?>
 				<div class="meme">
-					<?= $meme->get_title(); ?><br/>
-					<a href="view_meme.php?id=<?= $meme->get_id(); ?>"><img src="uploads/memes/<?= $meme->get_id(); ?>_thumb.jpg"></a>
-					Uploaded at: <?= $meme->get_timestamp(); ?>
+					<a href="view_meme.php?id=<?= $meme->get_id(); ?>">
+						<?= $meme->get_title(); ?><br/>
+						<img class="img-polaroid" src="uploads/memes/<?= $meme->get_id(); ?>_thumb.jpg">
+					</a>
+					<?= $meme->get_timestamp(); ?>
 				</div>
-			<? } 
+			<? }
 			if ($count == 0) echo "No Meme Uploads Yet."; ?>
 		</div>
 	</div>

@@ -100,9 +100,16 @@ img {
 	float:right;
 }
 
-.meme {
-	padding:10px;
+#memes {
+	padding-left: 60px;
 }
+
+.meme {
+	display: inline;
+	padding:10px;
+	float: left;
+}
+
 
 .member {
 	margin: auto;
@@ -132,5 +139,6 @@ img {
 
 .message {
 	width: 300px;
+	height: 20px;
 	margin-left: 150px;
 }
