@@ -13,32 +13,15 @@
 	<div id="content">
 		<? if ($user_id == $_SESSION['user_id']) {
 		?>
-		<form action="upload_meme.php" method="post" name="upload_image" enctype="multipart/form-data">
+		<form action="update_profile.php" method="post" name="upload_image" enctype="multipart/form-data">
 			<fieldset>
-				<label for="upload_image">Pick an image to upload:</label>
-					<input type="file" name="upload_image" id="upload_image"/><br/>
-					<input type="text" name="img_title" id="img_title" />
+				<label for="upload_image">Profile Picture:</label>
+					<input type="file" name="upload_image" id="upload_image"/>
 				<input type="submit" value="Upload" />
 			</fieldset>
 		</form>
 		<?
 		}?>
-		
-
-		<div id="memes">
-			<? 
-			$count = 0;
-			foreach (DbHelper::find_users_memes($user_id) as $meme) { 
-				$count++;
-			?>
-				<div class="meme">
-					<?= $meme->get_title(); ?><br/>
-					<img src="uploads/memes/<?= $meme->get_id(); ?>_thumb.jpg">
-					Uploaded at: <?= $meme->get_timestamp(); ?>
-				</div>
-			<? } 
-			if ($count == 0) echo "No Meme Uploads Yet."; ?>
-		</div>
 	</div>
 	<div class="clear"></div>
 

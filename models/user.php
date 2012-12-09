@@ -35,6 +35,15 @@
       return $this->first_name." ".$this->last_name;
     }
 
+    public function get_profile_pic() {
+      $filename = 'uploads/profile_pictures/'.$this->get_id().'_thumb.jpg';
+      if (file_exists($filename)) {
+        return $filename;
+      } else {
+        return 'uploads/profile_pictures/no_prof.png';
+      }
+    }
+
   }
 
 ?>
