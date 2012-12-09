@@ -33,7 +33,7 @@
 			?>
 				<div class="meme">
 					<?= $meme->get_title(); ?><br/>
-					<img src="uploads/memes/<?= $meme->get_id(); ?>_thumb.jpg">
+					<a href="view_meme.php?id=<?= $meme->get_id(); ?>"><img src="uploads/memes/<?= $meme->get_id(); ?>_thumb.jpg"></a>
 					Uploaded at: <?= $meme->get_timestamp(); ?>
 				</div>
 			<? } 

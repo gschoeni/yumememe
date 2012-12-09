@@ -130,6 +130,22 @@ class DbHelper {
 		return $memes;
 	}
 
+	public static function find_meme($id) {
+		self::initialize();
+		$user_id = 0;
+		if ($stmt = self::$db->prepare("SELECT memes.title, memes.user_id, memes.timestamp FROM memes WHERE memes.id = ?;")){
+			$stmt->bind_param('i', $id);
+			$stmt->execute();
+			$stmt->bind_result($title, $user_id, $timestamp);
+			$stmt->fetch();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return new Meme($id, $title, $user_id, $timestamp);
+	}
+
 	public static function find_users_by_name_or_email($search_string) {
 		self::initialize();
 		$users = array();
@@ -247,7 +263,6 @@ class DbHelper {
 	}
 
 	public static function insert_meme($title, $user_id) {
-		
 		self::initialize();
 		$id = 0;
 		if ($stmt = self::$db->prepare("INSERT INTO memes (title, user_id) VALUES (?,?)")){
@@ -260,6 +275,68 @@ class DbHelper {
 		}
 		self::close_connection();
 		return $id;	
+	}
+
+	public static function like_meme($user_id, $meme_id) {
+		self::initialize();
+		$id = 0;
+		if ($stmt = self::$db->prepare("INSERT INTO likes (user_id, meme_id) VALUES (?,?)")){
+			$stmt->bind_param('ii', $user_id, $meme_id);
+			$stmt->execute();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+	}
+
+	public static function num_meme_likes($meme_id) {
+		self::initialize();
+		$num_likes = 0;
+		$query = "SELECT COUNT(*) FROM likes WHERE meme_id = ?;";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('i', $meme_id);
+			$stmt->execute();
+			$stmt->bind_result($num_likes);
+			$stmt->fetch();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $num_likes;
+	}
+
+	public static function comment_on_meme($comment, $user_id, $meme_id) {
+		self::initialize();
+		$id = 0;
+		if ($stmt = self::$db->prepare("INSERT INTO comments (comment, user_id, meme_id) VALUES (?,?,?)")){
+			$stmt->bind_param('sii', $comment, $user_id, $meme_id);
+			$stmt->execute();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+	}
+
+	public static function get_meme_comments($meme_id) {
+		self::initialize();
+		$comments = array();
+		$query = "SELECT id, user_id, comment, timestamp FROM comments WHERE comments.meme_id = ? ORDER BY timestamp DESC;";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('i', $meme_id);
+			$stmt->execute();
+			$stmt->bind_result($id, $user_id, $comment, $timestamp);
+			while ($stmt->fetch()) {
+				array_push($comments, new Comment($id, $comment, $user_id, $meme_id, $timestamp));
+			}
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $comments;
 	}
 
 }

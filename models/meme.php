@@ -30,6 +30,14 @@
       return $this->timestamp;
     }
 
+    public function get_likes() {
+      return DbHelper::num_meme_likes($this->id);
+    }
+
+    public function get_comments() {
+      return DbHelper::get_meme_comments($this->id);
+    }
+
   }
 
 ?>

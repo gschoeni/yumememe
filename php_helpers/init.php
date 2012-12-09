@@ -11,6 +11,7 @@ require_once(DOCUMENT_ROOT.'php_helpers/functions.php');
 require_once(DOCUMENT_ROOT.'db/db_helper.php');
 require_once(DOCUMENT_ROOT.'models/user.php');
 require_once(DOCUMENT_ROOT.'models/meme.php');
+require_once(DOCUMENT_ROOT.'models/comment.php');
 
 // init the users session
 session_start();
