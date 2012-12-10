@@ -234,6 +234,20 @@ class DbHelper {
 		self::close_connection();
 	}
 
+	public static function update_user_password($id, $password) {
+		self::initialize();
+		$query = "UPDATE users SET hashed_password = ? WHERE id = ?";
+		if ($stmt = self::$db->prepare($query)){
+			$stmt->bind_param('si', sha1($password), $id);
+			$stmt->execute();
+			$stmt->fetch();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+	}
+
 	public static function toggle_following($user, $other) {
 		$id = self::is_following($user, $other);
 
@@ -292,17 +306,57 @@ class DbHelper {
 		return $id;
 	}
 
-	public static function like_meme($user_id, $meme_id) {
+	public static function user_likes_meme($user_id, $meme_id) {
 		self::initialize();
 		$id = 0;
-		if ($stmt = self::$db->prepare("INSERT INTO likes (user_id, meme_id) VALUES (?,?)")){
+		$query = "SELECT id FROM likes WHERE user_id = ? and meme_id = ?";
+		if ($stmt = self::$db->prepare($query)){
 			$stmt->bind_param('ii', $user_id, $meme_id);
+			$stmt->execute();
+			$stmt->bind_result($id);
+			$stmt->fetch();
+			$stmt->close();
+		} else {
+			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		}
+		self::close_connection();
+		return $id;
+	}
+
+	public static function like_meme($user_id, $meme_id) {
+		$id = self::user_likes_meme($user_id, $meme_id);
+
+		if ($id == 0) {
+			$query = "INSERT INTO likes (user_id, meme_id) VALUES (?, ?)";
+		} else {
+			$query = "DELETE FROM likes WHERE id = ?";
+		}
+
+		self::initialize();
+
+		if ($stmt = self::$db->prepare($query)){
+			if ($id == 0) {
+				$stmt->bind_param("ii", $user_id, $meme_id);
+			} else {
+				$stmt->bind_param("i", $id);
+			}
 			$stmt->execute();
 			$stmt->close();
 		} else {
 			die('prepare() failed: ' . htmlspecialchars(self::$db->error));
 		}
 		self::close_connection();
+		return $id == 0;
+
+
+		// if ($stmt = self::$db->prepare("INSERT INTO likes (user_id, meme_id) VALUES (?,?)")){
+		// 	$stmt->bind_param('ii', $user_id, $meme_id);
+		// 	$stmt->execute();
+		// 	$stmt->close();
+		// } else {
+		// 	die('prepare() failed: ' . htmlspecialchars(self::$db->error));
+		// }
+		// self::close_connection();
 	}
 
 	public static function num_meme_likes($meme_id) {
@@ -357,9 +411,9 @@ class DbHelper {
 	public static function find_my_friends_memes($user_id) {
 		self::initialize();
 		$memes = array();
-		$query = "SELECT id, title, user_id, timestamp FROM memes WHERE user_id in (SELECT user_id FROM followers WHERE follower_id = ?) ORDER BY timestamp DESC;";
+		$query = "SELECT id, title, user_id, timestamp FROM memes WHERE user_id in (SELECT user_id FROM followers WHERE follower_id = ?) OR user_id = ? ORDER BY timestamp DESC;";
 		if ($stmt = self::$db->prepare($query)){
-			$stmt->bind_param('i', $user_id);
+			$stmt->bind_param('ii', $user_id, $user_id);
 			$stmt->execute();
 			$stmt->bind_result($id, $title, $user_id, $timestamp);
 			while ($stmt->fetch()) {

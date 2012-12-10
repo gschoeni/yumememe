@@ -20,9 +20,11 @@
 	    	$count++;
 	    	?>
 	    	<div class="comment">
+	    		<img style="float:left; padding:10px;" width="60" height="60" src="<?= $comment->get_user()->get_profile_pic(); ?>">
 	    		<?= $comment->get_user()->get_name(); ?> said: <br/>
 	    		<?= $comment->get_comment(); ?>
 	    	</div>
+	    	<div class="clear"></div>
 	    	<?
 	    }
 	    if ($count == 0) echo "No Comments Yet.";
