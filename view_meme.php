@@ -18,10 +18,11 @@
 		$count = 0;
 	    foreach (DbHelper::get_meme_comments($meme->get_id()) as $comment) {
 	    	$count++;
+	    	$user = $comment->get_user();
 	    	?>
 	    	<div class="comment">
-	    		<img style="float:left; padding:10px;" width="60" height="60" src="<?= $comment->get_user()->get_profile_pic(); ?>">
-	    		<?= $comment->get_user()->get_name(); ?> said: <br/>
+	    		<img style="float:left; padding:10px;" width="60" height="60" src="<?= $user->get_profile_pic(); ?>">
+	    		<a href="profile_page.php?id=<?= $user->get_id(); ?>" alt="view profile"><?= $user->get_name(); ?></a> said: <br/>
 	    		<?= $comment->get_comment(); ?>
 	    	</div>
 	    	<div class="clear"></div>

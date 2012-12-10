@@ -20,7 +20,7 @@
 						<?= $meme->get_title(); ?><br/>
 						<img class="img-polaroid" src="uploads/memes/<?= $meme->get_id(); ?>_thumb.jpg">
 					</a>
-					<a href="profile_page.php?id=<?= $user->get_id(); ?>"/><?= $user->get_name(); ?></a>
+					<a href="profile_page.php?id=<?= $user->get_id(); ?>"><?= $user->get_name(); ?></a>
 					<br /><?= $meme->get_timestamp(); ?>
 				</div>
 			<? }

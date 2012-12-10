@@ -100,14 +100,8 @@ img {
 	float:right;
 }
 
-#memes {
-	padding-left: 60px;
-}
-
 .meme {
-	display: inline;
 	padding:10px;
-	float: left;
 }
 
 
